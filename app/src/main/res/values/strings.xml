@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">exam1</string>
+    <string name="button_name">SHOW EMOJILIST</string>
+    <string name="header">EMOJILIST</string>
+    <string name="save">Save</string>
+    <string name="take_photo">Take photo</string>
+    <string name="emoji_name">Set a name for you emoji</string>
+</resources>
