@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewEmojiActivity">
+    tools:context=".activitys.NewEmojiActivity">
 
     <ImageView
         android:id="@+id/imageEmoji"
@@ -14,7 +14,7 @@
         android:layout_marginTop="80dp"
         android:layout_marginEnd="88dp"
         android:layout_marginBottom="57dp"
-        android:contentDescription="Your Current Emoji photo"
+        android:contentDescription="@string/imageView_emoji"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,6 +26,7 @@
         android:layout_height="62dp"
         android:layout_marginStart="29dp"
         android:layout_marginBottom="16dp"
+        android:onClick="onClickTakePhoto"
         android:text="@string/take_photo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -36,6 +37,7 @@
         android:layout_height="64dp"
         android:layout_marginStart="88dp"
         android:layout_marginBottom="16dp"
+        android:onClick="onClickSavePhoto"
         android:text="@string/save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button4" />
@@ -47,16 +49,31 @@
         android:layout_marginStart="75dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="75dp"
+        android:layout_marginBottom="26dp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewAlert"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageEmoji">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputName"
             android:layout_width="252dp"
             android:layout_height="62dp"
             android:hint="@string/emoji_name" />
     </com.google.android.material.textfield.TextInputLayout>
-    "
-        tools:layout_editor_absoluteX="134dp"
-        tools:layout_editor_absoluteY="229dp" />
+
+    <TextView
+        android:id="@+id/textViewAlert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="177dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="176dp"
+        android:layout_marginBottom="291dp"
+        android:textColor="@color/alertcolor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

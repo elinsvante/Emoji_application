@@ -5,8 +5,10 @@ import android.content.Context;
 import com.ad.exam1.R;
 import com.ad.exam1.models.Emoji;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,15 +50,11 @@ public class EmojisRetriever {
         Gson gson = new Gson();
 
         String jsonString = getJsonString(context);
+        Type listOfMyClassObject = new TypeToken<ArrayList<Emoji>>() {}.getType();
 
-        //TODO: We need to convert the jsonString to a List<Emoji>
-        // we can use Gson for this
-        // https://github.com/google/gson
-        // and then make the method return it.
+        List<Emoji> emojiList = gson.fromJson(jsonString, listOfMyClassObject);
 
-        Emoji[] emojiList = gson.fromJson(jsonString, Emoji[].class);
-
-        return(Arrays.asList(emojiList));
+        return(emojiList);
 
     }
 

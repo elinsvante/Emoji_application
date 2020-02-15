@@ -8,4 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <color name="alertcolor">#ff0000</color>
+
 </resources>

@@ -1,6 +1,8 @@
 package com.ad.exam1.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +14,14 @@ import com.ad.exam1.R;
 import com.ad.exam1.models.Emoji;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.net.URL;
 import java.util.List;
 
 public class EmojiAdapter extends ArrayAdapter<List> {
 
     private final Context context;
     private List<Emoji> emojiList;
-    private int i;
 
     public EmojiAdapter (Context appContext, List emojis) {
         super(appContext, -1, emojis);
@@ -36,7 +39,19 @@ public class EmojiAdapter extends ArrayAdapter<List> {
 
         Emoji emoji = emojiList.get(position);
         nameEmoji.setText(emoji.getName());
-        loadPhotoFromInternet(emoji.getUrl(), imageEmoji);
+        String imagePath = emoji.getUrl();
+        if (isValid(imagePath)) {
+            loadPhotoFromInternet(emoji.getUrl(), imageEmoji);
+        }
+        else {
+            File imgFile = new  File(imagePath);
+            if(imgFile.exists()){
+
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                imageEmoji.setImageBitmap(myBitmap);
+            }
+        }
+
         return rowView;
     }
 
@@ -44,5 +59,17 @@ public class EmojiAdapter extends ArrayAdapter<List> {
         Picasso.get()
                 .load(url)
                 .into(imageEmoji);
+    }
+
+    public static boolean isValid(String url)
+    {
+        try {
+            new URL(url).toURI();
+            return true;
+        }
+
+        catch (Exception e) {
+            return false;
+        }
     }
 }
