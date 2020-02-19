@@ -25,23 +25,14 @@ public class EmojiActivity extends AppCompatActivity {
 
     private List<Emoji> myEmojiList = new ArrayList<>();
     private ListView listView;
+    static final int REQUEST_IMAGE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emoji);
 
-        Intent intent = getIntent();
-        if (intent.hasExtra("emojiName") && intent.hasExtra("imagePath")) {
-            String emojiName = intent.getStringExtra("emojiName");
-            String emojiImagePath = intent.getStringExtra("imagePath");
-            if (emojiName != null && emojiImagePath != null) {
-                addNewEmoji(emojiName, emojiImagePath);
-            }
-        }
-        else {
-            getEmojiList();
-        }
+        getEmojiList();
 
         bindViews();
         listView.setAdapter((ArrayAdapter)getAdapter());
@@ -49,8 +40,8 @@ public class EmojiActivity extends AppCompatActivity {
 
     private void addNewEmoji(String emojiName, String imageEmojiPath) {
         Emoji emoji = new Emoji(emojiName, imageEmojiPath);
-        getEmojiList();
         myEmojiList.add(emoji);
+        getEmojiList();
     }
 
     private void getEmojiList() {
@@ -71,6 +62,18 @@ public class EmojiActivity extends AppCompatActivity {
 
     public void onClickAddEmoji (View view) {
         Intent intent = new Intent(getApplicationContext(), NewEmojiActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_IMAGE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1) {
+            if(resultCode == RESULT_OK) {
+                String emojiName = data.getStringExtra("emojiName");
+                String emojiImagePath = data.getStringExtra("imagePath");
+                addNewEmoji(emojiName, emojiImagePath);
+            }
+        }
     }
 }

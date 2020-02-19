@@ -15,10 +15,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ad.exam1.R;
 import com.ad.exam1.activitys.EmojiActivity;
 import com.ad.exam1.models.Emoji;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,6 +32,7 @@ public class NewEmojiActivity extends AppCompatActivity {
     static final int REQUEST_TAKE_PHOTO = 1;
     private ImageView imageEmoji;
     private TextView textViewAlert;
+    private TextInputEditText textInputName;
     private String currentPhotoPath;
 
     @Override
@@ -46,6 +49,7 @@ public class NewEmojiActivity extends AppCompatActivity {
     private void getViewElements() {
         imageEmoji = findViewById(R.id.imageEmoji);
         textViewAlert = findViewById(R.id.textViewAlert);
+        textInputName = findViewById(R.id.textInputName);
     }
 
     public void onClickTakePhoto(View view) {
@@ -54,15 +58,17 @@ public class NewEmojiActivity extends AppCompatActivity {
 
     public void onClickSavePhoto(View view) {
         Intent intent = new Intent(getApplicationContext(), EmojiActivity.class);
-        String inputEmojiName = ((EditText)findViewById(R.id.textInputName)).getText().toString();
-        if(inputEmojiName.equals("")) {
-            textViewAlert.setText("You have to  enter a name for your emoji.");
+        String textInputNameString = ((EditText)textInputName).getText().toString();
+        if(textInputNameString.equals("")) {
+            Toast.makeText(getApplicationContext(), "Please insert a name for your emoji.", Toast.LENGTH_SHORT).show();
         }
 
         else {
-            intent.putExtra("emojiName", inputEmojiName);
-            intent.putExtra("imagePath", currentPhotoPath);
-            startActivity(intent);
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("emojiName", textInputNameString);
+            resultIntent.putExtra("imagePath", currentPhotoPath);
+            setResult(RESULT_OK, resultIntent);
+            finish();
         }
     }
 
